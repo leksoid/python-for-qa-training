@@ -12,3 +12,11 @@ class GroupHelper:
         wd.find_element_by_name("group_footer").send_keys(group.footer)
         wd.find_element_by_name("submit").click()
         self.app.navigation.return_to_groups_page()
+
+    def delete_first(self):
+        wd = self.app.wd
+        self.app.navigation.open_groups_page()
+        # might not work, check with real locators
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to.alert.accept()

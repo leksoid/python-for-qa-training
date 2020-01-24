@@ -3,7 +3,7 @@ class AuthorizationHelper:
     def __init__(self, application):
         self.app = application
 
-    def login(self, username, password):
+    def login(self, username="admin", password="secret"):
         wd = self.app.wd
         self.app.navigation.open_home_page()
         wd.find_element_by_name("user").send_keys(username)
