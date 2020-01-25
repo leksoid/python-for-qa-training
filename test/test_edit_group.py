@@ -2,16 +2,13 @@ from model.group import Group
 
 
 def test_edit_group_name(app):
-    app.auth.login()
     app.group_helper.edit_first(Group(name="newName"))
-    app.auth.logout()
+    app.navigation.back_to_home_page()
 
 def test_edit_group_header(app):
-    app.auth.login()
     app.group_helper.edit_first(Group(header="newHeader"))
-    app.auth.logout()
+    app.navigation.back_to_home_page()
 
 def test_edit_group_footer(app):
-    app.auth.login()
     app.group_helper.edit_first(Group(footer="newFooter"))
-    app.auth.logout()
+    app.navigation.back_to_home_page()

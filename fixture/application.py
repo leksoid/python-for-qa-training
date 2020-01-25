@@ -15,5 +15,12 @@ class Application:
         self.group_helper = GroupHelper(self)
         self.contact_helper = ContactHelper(self)
 
+    def is_valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except:
+            return False
+            
     def tear_down(self):
         self.wd.quit()

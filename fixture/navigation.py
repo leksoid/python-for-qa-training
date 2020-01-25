@@ -9,7 +9,7 @@ class NavigationHelper:
 
     def back_to_home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home page").click()
+        wd.find_element_by_link_text("home").click()
 
     def open_groups_page(self):
         wd = self.app.wd
