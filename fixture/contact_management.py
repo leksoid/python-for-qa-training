@@ -6,13 +6,7 @@ class ContactHelper:
     def create(self, contact):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
-        wd.find_element_by_name("firstname").send_keys(contact.first_name)
-        wd.find_element_by_name("lastname").send_keys(contact.last_name)
-        wd.find_element_by_name("title").send_keys(contact.title)
-        wd.find_element_by_name("company").send_keys(contact.company)
-        wd.find_element_by_name("address").send_keys(contact.primary_address)
-        wd.find_element_by_name("mobile").send_keys(contact.mobile_number)
-        wd.find_element_by_name("email").send_keys(contact.email)
+        self.fill_form(contact)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
     def delete_first(self):
@@ -24,8 +18,20 @@ class ContactHelper:
     def edit_first(self, contact):
         wd = self.app.wd
         wd.find_element_by_xpath("//*[@title='Edit']").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.first_name)
+        self.fill_form(contact)
         wd.find_element_by_name("update").click()
     
-    
+    def fill_form(self, contact):
+        self.enter_field("firstname", contact.first_name)
+        self.enter_field("lastname", contact.last_name)
+        self.enter_field("title", contact.title)
+        self.enter_field("company", contact.company)
+        self.enter_field("address", contact.primary_address)
+        self.enter_field("mobile", contact.mobile_number)
+        self.enter_field("email", contact.email)
+
+    def enter_field(self, by_name, value):
+        wd = self.app.wd
+        if value is not None:
+            wd.find_element_by_name(by_name).clear()
+            wd.find_element_by_name(by_name).send_keys(value)
