@@ -7,4 +7,3 @@ def test_delete_contact(app):
                                       primary_address="1234 Somewhere Rd\nSan Matiago, CA 92109",
                                       mobile_number="6192778990", email="paparonchik@pants.com"))
     app.contact_helper.delete_first()
-    app.navigation.back_to_home_page()

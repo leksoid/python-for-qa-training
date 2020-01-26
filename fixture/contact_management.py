@@ -12,12 +12,14 @@ class ContactHelper:
 
     def delete_first(self):
         wd = self.app.wd
+        self.app.navigation.open_home_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
 
     def edit_first(self, contact):
         wd = self.app.wd
+        self.app.navigation.open_home_page()
         wd.find_element_by_xpath("//*[@title='Edit']").click()
         self.fill_form(contact)
         wd.find_element_by_name("update").click()
@@ -39,4 +41,5 @@ class ContactHelper:
 
     def get_count(self):
         wd = self.app.wd
+        self.app.navigation.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
