@@ -41,3 +41,7 @@ class GroupHelper:
         if value is not None:
             wd.find_element_by_name(by_name).clear()
             wd.find_element_by_name(by_name).send_keys(value)
+
+    def get_count(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_name("selected[]"))

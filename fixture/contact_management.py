@@ -8,6 +8,7 @@ class ContactHelper:
         wd.find_element_by_link_text("add new").click()
         self.fill_form(contact)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.app.navigation.back_to_home_page()
 
     def delete_first(self):
         wd = self.app.wd
@@ -35,3 +36,7 @@ class ContactHelper:
         if value is not None:
             wd.find_element_by_name(by_name).clear()
             wd.find_element_by_name(by_name).send_keys(value)
+
+    def get_count(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_name("selected[]"))
