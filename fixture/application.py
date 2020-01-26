@@ -9,7 +9,6 @@ class Application:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(5)
         self.navigation = NavigationHelper(self)
         self.auth = AuthorizationHelper(self)
         self.group_helper = GroupHelper(self)
