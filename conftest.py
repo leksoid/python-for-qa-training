@@ -12,7 +12,7 @@ def app(request):
         fixture = Application()  # initialization of fixture
     else:
         if not fixture.is_valid():
-            fixture = Application()  # initialization of fixture
+            fixture = Application()  
     fixture.auth.ensure_login(username="admin", password="secret")
     return fixture
 
