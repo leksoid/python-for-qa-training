@@ -10,7 +10,7 @@ def test_delete_contact(app):
     initial_contacts = app.contact_helper.get_contacts()
     app.contact_helper.delete_first()
     app.wd.refresh()
+    assert len(initial_contacts) - 1 == app.contact_helper.get_count()
     final_contacts = app.contact_helper.get_contacts()
-    assert len(initial_contacts) - 1 == len(final_contacts)
     initial_contacts[0:1] = []
     assert initial_contacts == final_contacts

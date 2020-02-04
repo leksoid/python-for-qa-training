@@ -7,7 +7,7 @@ def test_delete_group(app):
         app.group_helper.create(test_data)
     initial_groups = app.group_helper.get_groups()
     app.group_helper.delete_first()
+    assert len(initial_groups) - 1 == app.group_helper.get_count()
     final_groups = app.group_helper.get_groups()
-    assert len(initial_groups) - 1 == len(final_groups)
     initial_groups[0:1] = []
     assert initial_groups == final_groups

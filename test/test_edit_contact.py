@@ -13,8 +13,8 @@ def test_edit_contact_names(app):
     initial_contacts = app.contact_helper.get_contacts()
     new_test_data.id = initial_contacts[0].id
     app.contact_helper.edit_first(new_test_data)
+    assert len(initial_contacts) == app.contact_helper.get_count()
     final_contacts = app.contact_helper.get_contacts()
-    assert len(initial_contacts) == len(final_contacts)
     initial_contacts[0] = new_test_data
     assert sorted(initial_contacts, key=Contact.by_id_or_max) == sorted(final_contacts, key=Contact.by_id_or_max)
 

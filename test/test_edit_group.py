@@ -9,8 +9,8 @@ def test_edit_group_name(app):
     initial_groups = app.group_helper.get_groups()
     new_test_data.id = initial_groups[0].id
     app.group_helper.edit_first(new_test_data)
+    assert len(initial_groups) == app.group_helper.get_count()
     final_groups = app.group_helper.get_groups()
-    assert len(initial_groups) == len(final_groups)
     initial_groups[0] = new_test_data
     assert sorted(initial_groups, key=Group.by_id_or_max) == sorted(final_groups, key=Group.by_id_or_max)
 
