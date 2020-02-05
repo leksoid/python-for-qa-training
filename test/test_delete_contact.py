@@ -1,4 +1,5 @@
 from model.contact import Contact
+from random import randrange
 
 
 def test_delete_contact(app):
@@ -8,9 +9,10 @@ def test_delete_contact(app):
     if app.contact_helper.get_count() == 0:
         app.contact_helper.create(test_data)
     initial_contacts = app.contact_helper.get_contacts()
-    app.contact_helper.delete_first()
+    index = randrange(len(initial_contacts))
+    app.contact_helper.delete_by_index(index)
     app.wd.refresh()
     assert len(initial_contacts) - 1 == app.contact_helper.get_count()
     final_contacts = app.contact_helper.get_contacts()
-    initial_contacts[0:1] = []
+    initial_contacts[index:index+1] = []
     assert initial_contacts == final_contacts

@@ -18,18 +18,24 @@ class ContactHelper:
         self.contacts_cache = None
 
     def delete_first(self):
+        self.delete_by_index(0)
+
+    def delete_by_index(self, index):
         wd = self.app.wd
         self.app.navigation.open_home_page()
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         WebDriverWait(wd, 10).until(ec.presence_of_element_located((By.ID, "maintable")))
         self.contacts_cache = None
 
     def edit_first(self, contact):
+        self.edit_by_index(contact, 0)
+
+    def edit_by_index(self, contact, index):
         wd = self.app.wd
         self.app.navigation.open_home_page()
-        wd.find_element_by_xpath("//*[@title='Edit']").click()
+        wd.find_elements_by_xpath("//*[@title='Edit']")[index].click()
         self.fill_form(contact)
         wd.find_element_by_name("update").click()
         self.contacts_cache = None
