@@ -4,6 +4,7 @@ from fixture.application import Application
 
 fixture = None
 
+
 @pytest.fixture()
 def app(request):
     """Start the app"""
@@ -15,6 +16,7 @@ def app(request):
             fixture = Application()  
     fixture.auth.ensure_login(username="admin", password="secret")
     return fixture
+
 
 @pytest.fixture(scope="session", autouse=True)
 def stop_app(request):
