@@ -51,7 +51,12 @@ class ContactHelper:
         self.enter_field("company", contact.company)
         self.enter_field("address", contact.primary_address)
         self.enter_field("mobile", contact.mobile_number)
+        self.enter_field("home", contact.home_number)
+        self.enter_field("work", contact.work_number)
         self.enter_field("email", contact.email)
+        self.enter_field("email2", contact.email2)
+        self.enter_field("email3", contact.email3)
+
 
     def enter_field(self, by_name, value):
         wd = self.app.wd
