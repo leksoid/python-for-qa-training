@@ -7,9 +7,18 @@ from fixture.group_management import GroupHelper
 
 class Application:
 
-    def __init__(self):
-        self.wd = webdriver.Firefox()
-        self.navigation = NavigationHelper(self)
+    def __init__(self, browser, host_url):
+        if browser == "chrome":
+            self.wd = webdriver.Chrome()
+        elif browser == "firefox":
+            self.wd = webdriver.Firefox()
+        elif browser == "ie":
+            self.wd = webdriver.Ie()
+        elif browser == "edge":
+            self.wd = webdriver.Edge()
+        else:
+            raise ValueError(f"There is no executable for {browser}")
+        self.navigation = NavigationHelper(self, host_url)
         self.auth = AuthorizationHelper(self)
         self.group_helper = GroupHelper(self)
         self.contact_helper = ContactHelper(self)
