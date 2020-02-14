@@ -1,11 +1,10 @@
-from model.contact import Contact
 from random import randrange
+from data.contact_data import data_provider
+import pytest
 
 
-def test_delete_contact(app):
-    test_data = Contact(first_name="John", last_name="Paparonchik", title="CEO", company="Purple Pants",
-                        primary_address="1234 Somewhere Rd\nSan Matiago, CA 92109",
-                        mobile_number="6192778990", email="paparonchik@pants.com")
+@pytest.mark.parametrize("test_data", data_provider, ids=[repr(each) for each in data_provider])
+def test_delete_contact(app, test_data):
     if app.contact_helper.get_count() == 0:
         app.contact_helper.create(test_data)
     initial_contacts = app.contact_helper.get_contacts()

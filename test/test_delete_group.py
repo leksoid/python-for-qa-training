@@ -1,9 +1,11 @@
 from model.group import Group
 from random import randrange
+from data.group_data import data_provider
+import pytest
 
 
-def test_delete_group(app):
-    test_data = Group(name="First Sample", header="It is awesome", footer="No its not")
+@pytest.mark.parametrize("test_data", data_provider, ids=[repr(each) for each in data_provider])
+def test_delete_group(app, test_data):
     if app.group_helper.get_count() == 0:
         app.group_helper.create(test_data)
     initial_groups = app.group_helper.get_groups()
