@@ -1,24 +1,25 @@
 import pytest
+import os.path
+import json
 from fixture.application import Application
 
 
 fixture = None
+config_file = None
 
 
 @pytest.fixture()
 def app(request):
     """Start the app"""
     global fixture
+    global config_file
     browser = request.config.getoption("--browser")
-    host_url = request.config.getoption("--hostUrl")
-    username = request.config.getoption("--username")
-    password = request.config.getoption("--password")
-    if fixture is None:
-        fixture = Application(browser, host_url)  # initialization of fixture
-    else:
-        if not fixture.is_valid():
-            fixture = Application(browser, host_url)
-    fixture.auth.ensure_login(username=username, password=password)
+    if config_file is None:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))) as f:
+            config_file = json.load(f)
+    if fixture is None or not fixture.is_valid():
+        fixture = Application(browser, config_file["host_url"])  # initialization of fixture
+    fixture.auth.ensure_login(username=config_file["username"], password=config_file["password"])
     return fixture
 
 
@@ -33,6 +34,4 @@ def stop_app(request):
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
-    parser.addoption("--hostUrl", action="store", default="http://localhost")
-    parser.addoption("--username", action="store")
-    parser.addoption("--password", action="store")
+    parser.addoption("--target", action="store", default="config.json")
