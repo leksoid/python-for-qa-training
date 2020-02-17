@@ -1,13 +1,9 @@
-from model.group import Group
 from random import randrange
-from data.group_data import data_provider
-import pytest
 
 
-@pytest.mark.parametrize("test_data", data_provider, ids=[repr(each) for each in data_provider])
-def test_delete_group(app, test_data):
+def test_delete_group(app, data_provider_groups):
     if app.group_helper.get_count() == 0:
-        app.group_helper.create(test_data)
+        app.group_helper.create(data_provider_groups)
     initial_groups = app.group_helper.get_groups()
     index = randrange(len(initial_groups))
     app.group_helper.delete_by_index(index)

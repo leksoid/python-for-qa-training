@@ -1,12 +1,9 @@
 import re
-from data.contact_data import data_provider
-import pytest
 
 
-@pytest.mark.parametrize("test_data", data_provider, ids=[repr(each) for each in data_provider])
-def test_contact_information(app, test_data):
+def test_contact_information(app, data_provider_contacts):
     if app.contact_helper.get_count() == 0:
-        app.contact_helper.create(test_data)
+        app.contact_helper.create(data_provider_contacts)
     hp_contact = app.contact_helper.get_contacts()[0]
     ep_contact = app.contact_helper.get_contact_from_edit_page(0)
     assert hp_contact.first_name == ep_contact.first_name

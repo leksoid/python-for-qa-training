@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
-from data.contact_data import data_provider
-import pytest
 
 
-@pytest.mark.parametrize("test_data", data_provider, ids=[repr(each) for each in data_provider])
-def test_add_contact(app, test_data):
+def test_add_contact(app, json_provider_contacts):
     initial_contacts = app.contact_helper.get_contacts()
-    app.contact_helper.create(test_data)
+    app.contact_helper.create(json_provider_contacts)
     final_contacts = app.contact_helper.get_contacts()
-    initial_contacts.append(test_data)
+    initial_contacts.append(json_provider_contacts)
     assert sorted(initial_contacts, key=Contact.by_id_or_max) == sorted(final_contacts, key=Contact.by_id_or_max)

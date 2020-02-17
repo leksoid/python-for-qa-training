@@ -1,6 +1,8 @@
 import pytest
 import os.path
+import jsonpickle
 import json
+import importlib
 from fixture.application import Application
 
 
@@ -35,3 +37,22 @@ def stop_app(request):
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="config.json")
+
+
+def pytest_generate_tests(metafunc):
+    for fixt in metafunc.fixturenames:
+        if fixt.startswith("data_provider_"):
+            test_data = load_from_module(fixt[14:])
+            metafunc.parametrize(fixt, test_data, ids=[repr(x) for x in test_data])
+        elif fixt.startswith("json_provider_"):
+            test_data = load_from_json(fixt[14:])
+            metafunc.parametrize(fixt, test_data, ids=[repr(x) for x in test_data])
+
+
+def load_from_module(module):
+    return importlib.import_module(f"data.{module}").data_provider
+
+
+def load_from_json(file):
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), f"data/{file}.json")) as fl:
+        return jsonpickle.decode(fl.read())

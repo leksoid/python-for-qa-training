@@ -1,12 +1,9 @@
 from random import randrange
-from data.contact_data import data_provider
-import pytest
 
 
-@pytest.mark.parametrize("test_data", data_provider, ids=[repr(each) for each in data_provider])
-def test_delete_contact(app, test_data):
+def test_delete_contact(app, data_provider_contacts):
     if app.contact_helper.get_count() == 0:
-        app.contact_helper.create(test_data)
+        app.contact_helper.create(data_provider_contacts)
     initial_contacts = app.contact_helper.get_contacts()
     index = randrange(len(initial_contacts))
     app.contact_helper.delete_by_index(index)
